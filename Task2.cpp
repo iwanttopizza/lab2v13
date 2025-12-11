@@ -16,23 +16,24 @@ void runTask2() {
     std::ifstream inFile(filename);
     if (!inFile.is_open()) {
         std::cout << "Error: Could not open file " << filename << ". Make sure it exists!\n";
-        // Создадим файл для теста, чтобы студент не мучился
         std::ofstream testFile(filename);
-        testFile << "apple banana orange elephant universe car house idea";
+        testFile << "Apple banana Orange Elephant Universe car house Idea";
         testFile.close();
         std::cout << "Created test file '" << filename << "'. Try again.\n";
         return;
     }
 
-    std::cout << "\n--- Original Text ---\n";
-    // Читаем весь файл в буфер (упрощенно посимвольно или по словам)
-    // По заданию нужно менять слова. Проще читать по словам.
-    
-    // Но! Если читать по словам (`>>`), мы потеряем пробелы и форматирование. 
-    // Задание говорит "считывает текст... и выводит его на экран, заменив...".
-    // Значит, лучше читать целиком и обрабатывать на лету.
-
     char buffer[1024]; 
+
+    std::cout << "\n--- Original Text ---\n";
+
+    while (inFile.getline(buffer, 1024)) {
+        std::cout << buffer << "\n";
+    }
+    inFile.close();
+
+    std::cout << "\n--- Modified Text ---\n";
+    inFile.open(filename);
     while (inFile.getline(buffer, 1024)) {
         // buffer содержит одну строку текста
         // Пройдемся по ней руками
@@ -43,7 +44,7 @@ void runTask2() {
                 if (newWord) {
                     // Это первая буква слова. Проверяем, гласная ли она.
                     if (isVowel(buffer[i])) {
-                        std::cout << (char)toupper(buffer[i]); // Выводим большую
+                        std::cout << (char)toupper(buffer[i]); // Выводим прописную
                     } else {
                         std::cout << buffer[i]; // Выводим как есть
                     }
